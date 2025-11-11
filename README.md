@@ -1,6 +1,6 @@
 ## Flask Transaction API
 
-A simple Flask REST API demonstrating **CRUD operations**, Request Validation with **Marshmallow**, **SQLAlchemy ORM**, **Database Persistence** using **SQLite**, HTML template rendring with **Bootstrap**, and **Docker containerization**.
+A simple Flask REST API demonstrating **CRUD operations**, Request Validation with **Marshmallow**, **SQLAlchemy ORM**, **Database Persistence** using **SQLite**, **JWT Authentication**, HTML template rendring with **Bootstrap**, and **Docker containerization**.
 
 ### Build & Run
 ```bash
@@ -12,14 +12,24 @@ docker build -t flask-app .
 docker run -p 5000:5000 flask-app
 ```
 
+### Authentication
+
+```bash
+# Get JWT token
+curl -X POST -H "Content-Type: application/json" \
+-d '{"username": "admin", "password": "password123"}' \
+http://localhost:5000/login
+```
+
 ### API Endpoints
 
 ```bash
 # Get all transactions: JSON
 curl http://localhost:5000/transactions
 
-# Add transaction
+# Add transaction - Requires JWT token
 curl -X POST -H "Content-Type: application/json" \
+-H "Authorization: Bearer YOUR_TOKEN_HERE" \
 -d '{"description": "book", "amount": -300}' \
 http://localhost:5000/transactions
 
@@ -54,5 +64,6 @@ python app.py
 - **SQLAlchemy** - ORM for database operations
 - **Marshmallow** - Data validation
 - **SQLite** - Lightweight database
+- **PyJWT** - JWT token authentication
 - **Bootstrap 5** - UI styling
 - **Docker** - Containerization
